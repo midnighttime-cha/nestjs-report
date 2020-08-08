@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 const fs = require('fs');
 const path = require('path');
 const utils = require('util');
@@ -21,7 +21,7 @@ export class PdfService {
   async generatePdf() {
     let data = {};
     await this.getTemplateHtml().then(async (res) => {
-      console.log("Compiing the template with handlebars")
+      Logger.log("Compiing the template with handlebars")
       const template = hb.compile(res, { strict: true });
       const result = template(data);
       const html = result;
@@ -30,7 +30,7 @@ export class PdfService {
       await page.setContent(html)
       await page.pdf({ path: './files/pdf/invoice.pdf', format: 'A4' })
       await browser.close();
-      console.log("PDF Generated")
+      Logger.log("PDF Generated")
     }).catch(err => {
       console.error(err)
     });
