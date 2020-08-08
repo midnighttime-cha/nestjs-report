@@ -11,7 +11,7 @@ export class PdfService {
   async getTemplateHtml() {
     console.log("Loading template file in memory")
     try {
-      const invoicePath = path.resolve("./invoice.html");
+      const invoicePath = path.resolve("./template/test.html");
       return await readFile(invoicePath, 'utf8');
     } catch (err) {
       return Promise.reject("Could not load html template");
@@ -28,7 +28,7 @@ export class PdfService {
       const browser = await puppeteer.launch();
       const page = await browser.newPage()
       await page.setContent(html)
-      await page.pdf({ path: 'invoice.pdf', format: 'A4' })
+      await page.pdf({ path: './files/pdf/invoice.pdf', format: 'A4' })
       await browser.close();
       console.log("PDF Generated")
     }).catch(err => {
