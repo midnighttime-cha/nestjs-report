@@ -1,6 +1,8 @@
+import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication, ExpressAdapter } from '@nestjs/platform-express';
+import { join } from 'path';
 import { LoggingInterceptor } from './shared/interceptor/logging.interceptor';
 import { HttpExceptionFilter } from './shared/filter/http-exception.filter';
 const bodyParser = require('body-parser');
@@ -43,6 +45,10 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs/api/v1', app, document, swaggerCustomOptions);
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
 
   await app.listen(port);
   await Logger.warn("==============================")
