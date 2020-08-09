@@ -7,7 +7,7 @@ const hb = require('handlebars');
 const readFile = utils.promisify(fs.readFile);
 
 @Injectable()
-export class PdfService {
+export class ExcelService {
   async getTemplateHtml(filename: string) {
     Logger.log(`Loading template file in memory : ${filename}`);
     try {
@@ -20,7 +20,7 @@ export class PdfService {
 
   async generatePdf(filename: string) {
     let data = { message: filename };
-    const files = await `./files/pdf/${filename}.pdf`;
+    const files = await `./files/excel/${filename}.pdf`;
     await this.getTemplateHtml(filename).then(async (res) => {
       Logger.log("Compiing the template with handlebars")
       const template = hb.compile(res, { strict: true });
@@ -37,6 +37,6 @@ export class PdfService {
     }).catch(error => {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     });
-    return { files: `${filename}.pdf`, path: `./files/pdf/` };
+    return { files: `${filename}.pdf`, path: `./files/excel/` };
   }
 }

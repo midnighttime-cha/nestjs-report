@@ -1,9 +1,5 @@
-import { Controller, Get, Injectable, Res, Req, HttpStatus, HttpException, Param, Header } from '@nestjs/common';
+import { Controller, Get, Res, Req, HttpStatus, HttpException, Param, Header } from '@nestjs/common';
 import { PdfService } from './pdf.service';
-const fs = require('fs');
-const pdf = require('html-pdf');
-const hb = require('handlebars');
-const path = require('path');
 
 @Controller('pdf')
 export class PdfController {
